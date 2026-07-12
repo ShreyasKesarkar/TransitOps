@@ -12,6 +12,7 @@ export const managementConfigs = {
     title: 'Users',
     description: 'Manage platform users, roles, and user lifecycle actions.',
     service: userService,
+    scopeByOrganization: true,
     createLabel: 'Add User',
     searchPlaceholder: 'Search users by name, email, or role...',
     searchableKeys: ['fullName', 'email', 'roleName', 'employeeCode'],
@@ -33,13 +34,14 @@ export const managementConfigs = {
       { name: 'fullName', label: 'Full Name' },
       { name: 'email', label: 'Email', type: 'email' },
       { name: 'phone', label: 'Phone' },
-      { name: 'roleName', label: 'Role', type: 'select', options: [
-        { label: 'Admin', value: 'Admin' },
-        { label: 'Fleet Manager', value: 'Fleet Manager' },
-        { label: 'Driver', value: 'Driver' },
-        { label: 'Safety Officer', value: 'Safety Officer' },
-        { label: 'Financial Analyst', value: 'Financial Analyst' },
+      { name: 'roleId', label: 'Role', type: 'select', options: [
+        { label: 'Admin', value: '1' },
+        { label: 'Fleet Manager', value: '2' },
+        { label: 'Driver', value: '3' },
+        { label: 'Safety Officer', value: '4' },
+        { label: 'Financial Analyst', value: '5' },
       ] },
+      { name: 'password', label: 'Password', type: 'password' },
       { name: 'employmentStatus', label: 'Employment Status', type: 'select', options: [
         { label: 'Active', value: 'ACTIVE' },
         { label: 'Inactive', value: 'INACTIVE' },
@@ -70,7 +72,7 @@ export const managementConfigs = {
       { key: 'driverStatus', label: 'Status' },
     ],
     fields: [
-      { name: 'fullName', label: 'Driver Name' },
+      { name: 'userId', label: 'User ID', type: 'number' },
       { name: 'licenseNumber', label: 'License Number' },
       { name: 'licenseCategory', label: 'License Category', type: 'select', options: [
         { label: 'LMV', value: 'LMV' },
@@ -93,6 +95,7 @@ export const managementConfigs = {
     title: 'Vehicles',
     description: 'Track fleet assets, status, and vehicle master data.',
     service: vehicleService,
+    scopeByOrganization: true,
     createLabel: 'Add Vehicle',
     searchPlaceholder: 'Search vehicles by code, reg number, or model...',
     searchableKeys: ['vehicleCode', 'registrationNumber', 'manufacturer', 'model', 'vehicleStatus'],
@@ -115,18 +118,19 @@ export const managementConfigs = {
     fields: [
       { name: 'vehicleCode', label: 'Vehicle Code' },
       { name: 'registrationNumber', label: 'Registration Number' },
-      { name: 'vehicleType', label: 'Vehicle Type', type: 'select', options: [
-        { label: 'Truck', value: 'Truck' },
-        { label: 'Van', value: 'Van' },
-        { label: 'Bus', value: 'Bus' },
-        { label: 'Bike', value: 'Bike' },
-        { label: 'Car', value: 'Car' },
+      { name: 'vehicleTypeId', label: 'Vehicle Type', type: 'select', options: [
+        { label: 'Truck', value: '1' },
+        { label: 'Van', value: '2' },
+        { label: 'Bus', value: '3' },
+        { label: 'Bike', value: '4' },
+        { label: 'Car', value: '5' },
       ] },
       { name: 'manufacturer', label: 'Manufacturer' },
       { name: 'model', label: 'Model' },
       { name: 'manufacturingYear', label: 'Year', type: 'number' },
-      { name: 'capacity', label: 'Capacity' },
-      { name: 'vehicleStatus', label: 'Status', type: 'select', options: [
+      { name: 'maximumLoadCapacity', label: 'Maximum Load Capacity', type: 'number' },
+      { name: 'acquisitionCost', label: 'Acquisition Cost', type: 'number' },
+      { name: 'vehicleStatus', label: 'Vehicle Status', type: 'select', options: [
         { label: 'Available', value: 'AVAILABLE' },
         { label: 'On Trip', value: 'ON_TRIP' },
         { label: 'In Maintenance', value: 'IN_MAINTENANCE' },
@@ -138,6 +142,7 @@ export const managementConfigs = {
     title: 'Trips',
     description: 'Manage route planning, assignments, and trip execution.',
     service: tripService,
+    scopeByOrganization: true,
     createLabel: 'Create Trip',
     searchPlaceholder: 'Search trips by code, source, destination, or driver...',
     searchableKeys: ['tripCode', 'vehicle', 'driver', 'source', 'destination', 'tripStatus'],
@@ -159,13 +164,14 @@ export const managementConfigs = {
     ],
     fields: [
       { name: 'tripCode', label: 'Trip Code' },
-      { name: 'vehicle', label: 'Vehicle' },
-      { name: 'driver', label: 'Driver' },
+      { name: 'vehicleId', label: 'Vehicle ID', type: 'number' },
+      { name: 'driverId', label: 'Driver ID', type: 'number' },
       { name: 'source', label: 'Source' },
       { name: 'destination', label: 'Destination' },
+      { name: 'cargoWeight', label: 'Cargo Weight', type: 'number' },
       { name: 'plannedDistance', label: 'Planned Distance', type: 'number' },
       { name: 'actualDistance', label: 'Actual Distance', type: 'number' },
-      { name: 'tripStatus', label: 'Status', type: 'select', options: [
+      { name: 'tripStatus', label: 'Trip Status', type: 'select', options: [
         { label: 'Planned', value: 'PLANNED' },
         { label: 'In Progress', value: 'IN_PROGRESS' },
         { label: 'Completed', value: 'COMPLETED' },

@@ -11,6 +11,7 @@ import StatusBadge from '../common/StatusBadge';
 import Table from '../common/Table';
 import EntityFormModal from '../forms/EntityFormModal';
 import { useToast } from '../../context/ToastContext';
+import { useAuth } from '../../context/AuthContext';
 
 const defaultPageSize = 8;
 
@@ -26,6 +27,7 @@ function filterBySearch(rows, query, searchableKeys) {
 export default function ManagementPage({ config }) {
   const { title, description, service, columns, fields, createLabel, searchPlaceholder, summaryCards = [], searchableKeys = [] } = config;
   const { pushToast } = useToast();
+  const { user } = useAuth();
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -36,7 +38,8 @@ export default function ManagementPage({ config }) {
 
   const reload = async () => {
     setLoading(true);
-    const response = await service.list();
+    const listParams = config.scopeByOrganization && user?.organizationId ? { organization_id: user.organizationId } : {};
+    const response = await service.list(listParams);
     const items = Array.isArray(response) ? response : response.items || [];
     setRecords(items);
     setLoading(false);
@@ -71,7 +74,7 @@ export default function ManagementPage({ config }) {
       await service.update(selected.id, payload);
       pushToast({ type: 'success', title: `${title} updated`, message: `${title} record saved successfully.` });
     } else {
-      await service.create(payload);
+      await service.create(payload, { organizationId: user?.organizationId });
       pushToast({ type: 'success', title: `${title} created`, message: `${title} record added successfully.` });
     }
     closeModal();

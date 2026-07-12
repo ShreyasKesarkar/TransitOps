@@ -45,7 +45,7 @@ export function createCrudService({ basePath, fallbackData, idKey = 'id', codePr
     },
     async update(id, payload) {
       try {
-        const { data } = await apiClient.put(`${basePath}/${id}`, payload);
+        const { data } = await apiClient.patch(`${basePath}/${id}`, payload);
         return data;
       } catch {
         cache = cache.map((row) => (String(row[idKey]) === String(id) ? { ...row, ...payload } : row));

@@ -39,7 +39,7 @@ export default function DashboardSummary({ summary }) {
                   <span>{item.value}</span>
                 </div>
                 <div className="mt-3 h-2 rounded-full bg-white/10">
-                  <div className="h-2 rounded-full bg-brand-500" style={{ width: `${item.value * 4}%` }} />
+                  <div className="h-2 rounded-full bg-brand-500" style={{ width: `${Math.max(item.value * 6, 8)}%` }} />
                 </div>
               </div>
             ))}
